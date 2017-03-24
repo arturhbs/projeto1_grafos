@@ -1,5 +1,3 @@
-
-
 #include <stdio.h>
 #include <string.h>
 
@@ -41,7 +39,7 @@ int main(){
 	FILE * fp;
 	t_aluno alunos[41];
 	char amigos[] = "amigos.txt";
-	int vet[39], tamanho;
+	int vet[39];
 	
 	fp = fopen(amigos, "r");
 	int i=0, j;
@@ -52,27 +50,26 @@ int main(){
 	i=0;
 	while((fscanf(fp, "%[^|] | %[^|] | %[^\n]", alunos[i].matricula, alunos[i].nome, alunos[i].lacos ))!= EOF) {
 		printf("%s\n", alunos[i].lacos);
-		tamanho = 	strlen(alunos[i].lacos);
-		printf("tamanho = %d\n", tamanho);
 
 
 
 		if(alunos[i].lacos[0] == '-'){
-			vet[i] == 0;
+			vet[i] = 0;
 		}
-		
-		/*j =0;
-		while(alunos[i].lacos[j]!='\n'){
-			if(alunos[i].lacos[j] == ' '){
-				vet[i]++;
-			}
-			printf("%d\n",i );
-			j++;
+		else{	
+
+			for(j=0;j<=strlen(alunos[i].lacos); j++){
+				if(alunos[i].lacos[j] == ' '  ){
+					vet[i] = vet[i] + 1;
+					printf("ENTROU PORRA \n\n");
+				}
+				
+			}	
+			vet[i]++; /*para adicionar o ultimo valor , já que no final será \n e não um espaço*/
 		}
-			printf("entrou\n\n");
-		vet[i]++; // para adicionar o ultimo valor , já que no final será \n e não um espaço
-	*/
+
 		i++;
+		printf("vet [%d] = %d\n", i, vet[i]);
 	}
 
 	/*for(i=0; i < 39; i++){
