@@ -8,7 +8,7 @@ typedef struct aluno{
 	/*t_fila * adjacentes;*/
 }t_aluno;
 
-typedef struct fila {
+/*typedef struct fila {
 	t_aluno *knot;
 	struct fila *proximo;
 } t_elemento;
@@ -34,12 +34,13 @@ void Enfileirar (t_aluno *valor, t_fila *f) {
 	}
 	f->ultimo = novoultimo;										
 }
-
+*/
 int main(){
 	FILE * fp;
 	t_aluno alunos[41];
 	char amigos[] = "amigos.txt";
-	int vet[39];
+	int vet[39], soma=0;
+
 	
 	fp = fopen(amigos, "r");
 	int i=0, j;
@@ -48,34 +49,28 @@ int main(){
 		vet[i] =0; 
 	}
 	i=0;
-	while((fscanf(fp, "%[^|] | %[^|] | %[^\n]", alunos[i].matricula, alunos[i].nome, alunos[i].lacos ))!= EOF) {
-		printf("%s\n", alunos[i].lacos);
-
-
-
+	while((fscanf(fp, "%s | %[^|] | %[^\n]", alunos[i].matricula, alunos[i].nome, alunos[i].lacos ))!= EOF) {
+		soma =0;
 		if(alunos[i].lacos[0] == '-'){
 			vet[i] = 0;
 		}
 		else{	
-
 			for(j=0;j<=strlen(alunos[i].lacos); j++){
 				if(alunos[i].lacos[j] == ' '  ){
-					vet[i] = vet[i] + 1;
-					printf("ENTROU PORRA \n\n");
+					soma ++;
 				}
 				
 			}	
-			vet[i]++; /*para adicionar o ultimo valor , já que no final será \n e não um espaço*/
+			soma++; /*para adicionar o ultimo valor , já que no final será \n e não um espaço*/
 		}
+		vet[i] = soma;
 
-		i++;
-		printf("vet [%d] = %d\n", i, vet[i]);
-	}
+		i++;	}
 
-	/*for(i=0; i < 39; i++){
-		printf("vet[%d] = %d\n",i,  vet[i]);
+	for(i=0; i < 39; i++){
+		printf("vet[%d] = %d\n",i+1,  vet[i]);
 		vet[i] =0;
-	}*/		
+	}		
 
 	return 0;
 }	
