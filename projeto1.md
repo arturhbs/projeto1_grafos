@@ -26,7 +26,7 @@ typedef struct {
 	t_fila * adjacentes;
 }t_filaluno;
 
-void Enfileirar (int *valor, t_fila *f) {
+void Enfileirar (int valor, t_fila *f) {
 	t_elemento *novoultimo;	
 
 	novoultimo = (t_elemento*) malloc(sizeof(t_elemento));		
@@ -56,27 +56,27 @@ int main(){
 		vet[i] =0; 
 	}
 	i=0;
-	while((fscanf(fp, "%s | %[^|] | %[^\n]", alunos[i].aluno.matricula, alunos[i].aluno.nome, alunos[i].aluno.lacos ))!= EOF) {
+	while((fscanf(fp, "%s | %[^|] | %[^\n]", alunos[i].aluno->matricula, alunos[i].aluno->nome, alunos[i].aluno->lacos ))!= EOF) {
 		soma =0;
-		if(alunos[i].aluno.lacos[0] == '-'){
+		if(alunos[i].aluno->lacos[0] == '-'){
 			vet[i] = 0;
 		}
 		else{	
-			for(j=0;j<=strlen(alunos[i].aluno.lacos); j++){ // será para somar a quantidade de amigos presentes .
-				if(alunos[i].aluno.lacos[j] == ' '  ){
+			for(j=0;j<=strlen(alunos[i].aluno->lacos); j++){ // será para somar a quantidade de amigos presentes .
+				if(alunos[i].aluno->lacos[j] == ' '  ){
 					soma ++;					
 				}
 				
 			}	
 			soma++; /*para adicionar o ultimo valor , já que no final será \n e não um espaço*/
-			while(alunos[i].aluno.lacos[k] != '\n'){ // para salvar em uma lista os alunos adjacentes
-				if(alunos[i].aluno.lacos[k+1] == ' ' || alunos[i].aluno.lacos[k+1] == '\n' ){
-					if(alunos[i].aluno.lacos[k-1] >= 48 && alunos[i].aluno.lacos[k-1] <=57 ){
-						num = 10 * alunos[i].aluno.lacos[k-1] + alunos[i].aluno.lacos[k];
+			while(alunos[i].aluno->lacos[k] != '\n'){ // para salvar em uma lista os alunos adjacentes
+				if(alunos[i].aluno->lacos[k+1] == ' ' || alunos[i].aluno->lacos[k+1] == '\n' ){
+					if(alunos[i].aluno->lacos[k-1] >= 48 && alunos[i].aluno->lacos[k-1] <=57 ){
+						num = 10 * alunos[i].aluno->lacos[k-1] + alunos[i].aluno->lacos[k];
 						Enfileirar(num, alunos[i].adjacentes);
 					}
 					else{
-						num = alunos[i].aluno.lacos[k];
+						num = alunos[i].aluno->lacos[k];
 						Enfileirar(num, alunos[i].adjacentes);
 					}
 				}
