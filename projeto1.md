@@ -47,6 +47,8 @@ int main(){
 	t_filaluno alunos[41];
 	char amigos[] = "amigos.txt";
 	int vet[39], soma=0, j, num;
+	
+	alunos[0].aluno = (t_aluno*)malloc(sizeof(t_aluno)); // precisa de alocar memória caso queira acessar o t_aluno;
 
 	
 	fp = fopen(amigos, "r");
