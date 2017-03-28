@@ -2,16 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 
-typedef struct {
-	char matricula[20];
-	char nome[40];
-	char lacos[40];
-	/*t_fila * adjacentes;*/
-}t_aluno;
-
 
 typedef struct fila {
-	t_aluno *knot;
+	int knot;
 	struct fila *proximo;
 } t_elemento;
 
@@ -22,9 +15,13 @@ typedef struct {
 } t_fila;
 
 typedef struct {
-	t_aluno * aluno;
+	char matricula[20];
+	char nome[40];
+	char lacos[40];
 	t_fila * adjacentes;
-}t_filaluno;
+}t_aluno;
+
+
 
 void Enfileirar (int valor, t_fila *f) {
 	t_elemento *novoultimo;	
@@ -43,45 +40,69 @@ void Enfileirar (int valor, t_fila *f) {
 }
 
 int main(){
+
+
 	FILE * fp;
-	t_filaluno alunos[41];
+	t_aluno alunos[39];
 	char amigos[] = "amigos.txt";
 	int vet[39], soma=0, j, num;
-	
-	alunos[0].aluno = (t_aluno*)malloc(sizeof(t_aluno)); // precisa de alocar memória caso queira acessar o t_aluno;
 
 	
 	fp = fopen(amigos, "r");
-	int i=0, k;
-	
+	int i=0, k=0;	
+
 	for(i=0; i < 39; i++){
 		vet[i] =0; 
 	}
 	i=0;
-	while((fscanf(fp, "%s | %[^|] | %[^\n]", alunos[i].aluno->matricula, alunos[i].aluno->nome, alunos[i].aluno->lacos ))!= EOF) {
+	while((fscanf(fp, "%s | %[^|] | %[^\n]", alunos[i].matricula, alunos[i].nome, alunos[i].lacos ))!= EOF) {
+	
 		soma =0;
-		if(alunos[i].aluno->lacos[0] == '-'){
+		if(alunos[i].lacos[0] == '-'){
 			vet[i] = 0;
 		}
 		else{	
-			for(j=0;j<=strlen(alunos[i].aluno->lacos); j++){ // será para somar a quantidade de amigos presentes .
-				if(alunos[i].aluno->lacos[j] == ' '  ){
+			for(j=0;j<=strlen(alunos[i].lacos); j++){ // será para somar a quantidade de amigos presentes .
+				if(alunos[i].lacos[j] == ' '  ){
 					soma ++;					
 				}
 				
 			}	
 			soma++; /*para adicionar o ultimo valor , já que no final será \n e não um espaço*/
-			while(alunos[i].aluno->lacos[k] != '\n'){ // para salvar em uma lista os alunos adjacentes
-				if(alunos[i].aluno->lacos[k+1] == ' ' || alunos[i].aluno->lacos[k+1] == '\n' ){
-					if(alunos[i].aluno->lacos[k-1] >= 48 && alunos[i].aluno->lacos[k-1] <=57 ){
-						num = 10 * alunos[i].aluno->lacos[k-1] + alunos[i].aluno->lacos[k];
+			
+			printf("%s\n",alunos[i].lacos );
+			int tamanho = strlen(alunos[i].lacos);
+			printf("%d\n",tamanho );
+			for(k=0;k<strlen(alunos[i].lacos); k++){ // para salvar em uma lista os alunos adjacentes
+					
+					printf("%c\n", alunos[i].lacos[k] );
+					getchar();
+				
+				if(alunos[i].lacos[k+1] == ' '  ){
+					
+					if(alunos[i].lacos[k-1] >= 48 && alunos[i].lacos[k-1] <=57 ){
+						
+						num = 10 * alunos[i].lacos[k-1] + alunos[i].lacos[k];
 						Enfileirar(num, alunos[i].adjacentes);
 					}
 					else{
-						num = alunos[i].aluno->lacos[k];
+
+						num = alunos[i].lacos[k];
+
 						Enfileirar(num, alunos[i].adjacentes);
 					}
 				}
+				else{
+					if(alunos[i].lacos[k+1]<48 || alunos[i].lacos[k+1] > 57){
+					
+						num =(10 * (alunos[i].lacos[k-1] - 48)) + (alunos[i].lacos[k] - 48);
+				
+						alunos[i].adjacentes = (t_fila*) malloc(sizeof(t_fila)); 
+						Enfileirar(num, alunos[i].adjacentes);
+						printf("entroi2\n");
+					}
+				}
+				
 			}
 		}
 		vet[i] = soma;
