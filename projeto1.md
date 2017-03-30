@@ -7,8 +7,7 @@ typedef struct fila {
 	int knot;
 	struct fila *proximo;
 } t_elemento;
-
-
+				
 typedef struct {
 	t_elemento *primeiro;
 	t_elemento *ultimo;
@@ -80,26 +79,37 @@ int main(){
 	
 		soma =0;
 		if(alunos[i].lacos[0] == '-'){
+			printf("NULO\n");
 			alunos[i].adjacentes->primeiro = NULL;
 		}
 		else{	
 			
 			printf("%s\n",alunos[i].lacos );
-			int tamanho = strlen(alunos[i].lacos);
-			printf("%d\n",tamanho );
 			for(k=0;k<strlen(alunos[i].lacos); k++){ // para salvar em uma lista os alunos adjacentes
 				printf("%c\n", alunos[i].lacos[k] );
+			getchar();
 				
 				if(alunos[i].lacos[k+1]<48 || alunos[i].lacos[k+1] > 57 ||alunos[i].lacos[k+1] == ' '  ){
-					
-					if(alunos[i].lacos[k-1] >= 48 && alunos[i].lacos[k-1] <=57 ){
-						
-						num =(10 * (alunos[i].lacos[k-1] - 48)) + (alunos[i].lacos[k] - 48);
-						Enfileirar(num, alunos[i].adjacentes);
+					if(k!=0){
+
+
+						if(alunos[i].lacos[k-1] >= 48 && alunos[i].lacos[k-1] <=57 ){
+							printf("entrou\n");
+							num =(10 * (alunos[i].lacos[k-1] - 48)) + (alunos[i].lacos[k] - 48);
+							Enfileirar(num, alunos[i].adjacentes);
+						}
+						else{
+							printf("entrou2\n");
+							num = alunos[i].lacos[k] - 48;
+							Enfileirar(num, alunos[i].adjacentes);
+						}
 					}
 					else{
+
+						printf("entrou3\n");
 						num = alunos[i].lacos[k] - 48;
 						Enfileirar(num, alunos[i].adjacentes);
+
 					}
 				}
 			}
