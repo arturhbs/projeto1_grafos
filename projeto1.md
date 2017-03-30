@@ -53,7 +53,9 @@ int main(){
 
 	for(i=0; i < 39; i++){
 		vet[i] =0; 
+		alunos[i].adjacentes = (t_fila*) malloc(sizeof(t_fila)); 
 	}
+
 	i=0;
 	while((fscanf(fp, "%s | %[^|] | %[^\n]", alunos[i].matricula, alunos[i].nome, alunos[i].lacos ))!= EOF) {
 	
@@ -77,16 +79,18 @@ int main(){
 					
 					printf("%c\n", alunos[i].lacos[k] );
 					getchar();
+					
 				
-				if(alunos[i].lacos[k+1] == ' '  ){
+				if(alunos[i].lacos[k+1] == ' ' && k != 0 ){
 					
 					if(alunos[i].lacos[k-1] >= 48 && alunos[i].lacos[k-1] <=57 ){
-						
+						printf("entrou1\n");
 						num = 10 * alunos[i].lacos[k-1] + alunos[i].lacos[k];
 						Enfileirar(num, alunos[i].adjacentes);
 					}
 					else{
 
+						printf("entrou2\n");
 						num = alunos[i].lacos[k];
 
 						Enfileirar(num, alunos[i].adjacentes);
@@ -95,14 +99,14 @@ int main(){
 				else{
 					if(alunos[i].lacos[k+1]<48 || alunos[i].lacos[k+1] > 57){
 					
+						printf("entrou3\n");
+						
 						num =(10 * (alunos[i].lacos[k-1] - 48)) + (alunos[i].lacos[k] - 48);
 				
-						alunos[i].adjacentes = (t_fila*) malloc(sizeof(t_fila)); 
+						
 						Enfileirar(num, alunos[i].adjacentes);
-						printf("entroi2\n");
 					}
 				}
-				
 			}
 		}
 		vet[i] = soma;
