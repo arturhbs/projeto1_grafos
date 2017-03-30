@@ -40,19 +40,19 @@ void Enfileirar (int valor, t_fila *f) {
 }
 
 
-void imprimeAdjacentes (t_aluno * aluno) {
+void imprimeAdjacentes ( t_aluno * f) {
 	int i=0;
-	if(aluno->adjacentes->primeiro == NULL){
+	if(f->adjacentes->primeiro == NULL){
 		printf("alunos = 0\n");
 	}
 	else{
 
 		do{
 
-			printf("aluno = %d\n", aluno->adjacentes->primeiro->knot);
-			aluno->adjacentes->primeiro = aluno->adjacentes->primeiro->proximo;
+			printf("aluno = %d\n", f->adjacentes->primeiro->knot);
+			f->adjacentes->primeiro = f->adjacentes->primeiro->proximo;
 
-		}while(aluno->adjacentes->primeiro != NULL);
+		}while(f->adjacentes->primeiro != NULL);
 	}
 
 }
@@ -88,12 +88,9 @@ int main(){
 			int tamanho = strlen(alunos[i].lacos);
 			printf("%d\n",tamanho );
 			for(k=0;k<strlen(alunos[i].lacos); k++){ // para salvar em uma lista os alunos adjacentes
-					
-					printf("%c\n", alunos[i].lacos[k] );
-					getchar();
-					
+				printf("%c\n", alunos[i].lacos[k] );
 				
-				if(alunos[i].lacos[k+1] == ' '  ){
+				if(alunos[i].lacos[k+1]<48 || alunos[i].lacos[k+1] > 57 ||alunos[i].lacos[k+1] == ' '  ){
 					
 					if(alunos[i].lacos[k-1] >= 48 && alunos[i].lacos[k-1] <=57 ){
 						
@@ -103,22 +100,6 @@ int main(){
 					else{
 						num = alunos[i].lacos[k] - 48;
 						Enfileirar(num, alunos[i].adjacentes);
-					
-					}
-
-				}
-				else{
-					if((alunos[i].lacos[k+1]<48 || alunos[i].lacos[k+1] > 57) ){
-					
-						num =(10 * (alunos[i].lacos[k-1] - 48)) + (alunos[i].lacos[k] - 48);
-				
-						
-						Enfileirar(num, alunos[i].adjacentes);
-					}
-					else{
-						num = alunos[i].lacos[k] -48;
-						Enfileirar(num, alunos[i].adjacentes);
-					
 					}
 				}
 			}
@@ -126,8 +107,9 @@ int main(){
 
 		i++;
 	}
+	getchar();	
 	for(i=0;i<39;i++){
-		imprimeAdjacentes(alunos[i]);
+		imprimeAdjacentes(&alunos[i]);
 	}
 
 	fclose(fp);
