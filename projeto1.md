@@ -45,15 +45,16 @@ int main(){
 	FILE * fp;
 	t_aluno alunos[39];
 	char amigos[] = "amigos.txt";
-	int vet[39], soma=0, j, num;
+	int  soma=0, j, num;
 
 	
 	fp = fopen(amigos, "r");
 	int i=0, k=0;	
 
 	for(i=0; i < 39; i++){
-		vet[i] =0; 
 		alunos[i].adjacentes = (t_fila*) malloc(sizeof(t_fila)); 
+		alunos[i].adjacentes->primeiro = (t_elemento*) malloc(sizeof(t_elemento));
+		alunos[i].adjacentes->ultimo = (t_elemento*) malloc(sizeof(t_elemento));
 	}
 
 	i=0;
@@ -61,16 +62,9 @@ int main(){
 	
 		soma =0;
 		if(alunos[i].lacos[0] == '-'){
-			vet[i] = 0;
+			alunos[i].adjacentes = NULL;
 		}
 		else{	
-			for(j=0;j<=strlen(alunos[i].lacos); j++){ // será para somar a quantidade de amigos presentes .
-				if(alunos[i].lacos[j] == ' '  ){
-					soma ++;					
-				}
-				
-			}	
-			soma++; /*para adicionar o ultimo valor , já que no final será \n e não um espaço*/
 			
 			printf("%s\n",alunos[i].lacos );
 			int tamanho = strlen(alunos[i].lacos);
@@ -81,23 +75,24 @@ int main(){
 					getchar();
 					
 				
-				if(alunos[i].lacos[k+1] == ' ' && k != 0 ){
+				if(alunos[i].lacos[k+1] == ' '  ){
 					
 					if(alunos[i].lacos[k-1] >= 48 && alunos[i].lacos[k-1] <=57 ){
 						printf("entrou1\n");
-						num = 10 * alunos[i].lacos[k-1] + alunos[i].lacos[k];
+						
+						num =(10 * (alunos[i].lacos[k-1] - 48)) + (alunos[i].lacos[k] - 48);
 						Enfileirar(num, alunos[i].adjacentes);
 					}
 					else{
-
 						printf("entrou2\n");
 						num = alunos[i].lacos[k];
-
 						Enfileirar(num, alunos[i].adjacentes);
+					
 					}
+
 				}
 				else{
-					if(alunos[i].lacos[k+1]<48 || alunos[i].lacos[k+1] > 57){
+					if((alunos[i].lacos[k+1]<48 || alunos[i].lacos[k+1] > 57) ){
 					
 						printf("entrou3\n");
 						
@@ -106,12 +101,15 @@ int main(){
 						
 						Enfileirar(num, alunos[i].adjacentes);
 					}
+					else{
+						printf("entrou2\n");
+						num = alunos[i].lacos[k];
+						Enfileirar(num, alunos[i].adjacentes);
+					
+					}
 				}
 			}
 		}
-		vet[i] = soma;
-
-
 
 		i++;
 	}
