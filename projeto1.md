@@ -41,17 +41,29 @@ void Enfileirar (int valor, t_fila *f) {
 
 void imprimeAdjacentes ( t_aluno * f) {
 	int i=0;
+	t_elemento * alvo;
+	t_elemento * alvo2;
+	t_fila * lista;
 	if(f->adjacentes->primeiro == NULL){
 		printf("alunos = 0\n");
 	}
 	else{
+		alvo = f->adjacentes->primeiro;
+		while(alvo  != NULL){
+		printf("entrou\n");
+			printf ("%d->", alvo->knot);
+			alvo = f->adjacentes->primeiro->proximo;
+			if (alvo != NULL) {
+				alvo = f->adjacentes->primeiro;
+				while (alvo != NULL) {
+					printf ("%d->", alvo->knot);
+					alvo = alvo->proximo;
+				}
+			}
 
-		do{
-
-			printf("aluno = %d\n", f->adjacentes->primeiro->knot);
-			f->adjacentes->primeiro = f->adjacentes->primeiro->proximo;
-
-		}while(f->adjacentes->primeiro != NULL);
+			printf ("\\\n");
+		}
+		getchar();
 	}
 
 }
@@ -87,7 +99,7 @@ int main(){
 			printf("%s\n",alunos[i].lacos );
 			for(k=0;k<strlen(alunos[i].lacos); k++){ // para salvar em uma lista os alunos adjacentes
 				printf("%c\n", alunos[i].lacos[k] );
-			getchar();
+			
 				
 				if(alunos[i].lacos[k+1]<48 || alunos[i].lacos[k+1] > 57 ||alunos[i].lacos[k+1] == ' '  ){
 					if(k!=0){
@@ -99,14 +111,12 @@ int main(){
 							Enfileirar(num, alunos[i].adjacentes);
 						}
 						else{
-							printf("entrou2\n");
+						
 							num = alunos[i].lacos[k] - 48;
 							Enfileirar(num, alunos[i].adjacentes);
 						}
 					}
 					else{
-
-						printf("entrou3\n");
 						num = alunos[i].lacos[k] - 48;
 						Enfileirar(num, alunos[i].adjacentes);
 
