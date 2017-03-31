@@ -26,7 +26,7 @@ void Enfileirar (int valor, t_fila *f) {
 	t_elemento *novoultimo;	
 
 	novoultimo = (t_elemento*) malloc(sizeof(t_elemento));		
-	novoultimo->knot = valor;									
+	novoultimo->knot = valor;
 	novoultimo->proximo = NULL;									
 
 	if (f->primeiro == NULL) {									
@@ -50,7 +50,7 @@ void imprimeAdjacentes ( t_aluno * f) {
 	else{
 		alvo = f->adjacentes->primeiro;
 		while(alvo  != NULL){
-		printf("entrou\n");
+		
 			printf ("%d->", alvo->knot);
 			alvo = f->adjacentes->primeiro->proximo;
 			if (alvo != NULL) {
@@ -82,23 +82,24 @@ int main(){
 
 	for(i=0; i < 39; i++){
 		alunos[i].adjacentes = (t_fila*) malloc(sizeof(t_fila)); 
-		alunos[i].adjacentes->primeiro = (t_elemento*) malloc(sizeof(t_elemento));
-		alunos[i].adjacentes->ultimo = (t_elemento*) malloc(sizeof(t_elemento));
-	}
+		
+		alunos[i].adjacentes->primeiro = NULL;
+	
+		alunos[i].adjacentes->ultimo = NULL;
 
+	}
 	i=0;
 	while((fscanf(fp, "%s | %[^|] | %[^\n]", alunos[i].matricula, alunos[i].nome, alunos[i].lacos ))!= EOF) {
 	
 		soma =0;
 		if(alunos[i].lacos[0] == '-'){
-			printf("NULO\n");
+		
 			alunos[i].adjacentes->primeiro = NULL;
 		}
 		else{	
 			
 			printf("%s\n",alunos[i].lacos );
 			for(k=0;k<strlen(alunos[i].lacos); k++){ // para salvar em uma lista os alunos adjacentes
-				printf("%c\n", alunos[i].lacos[k] );
 			
 				
 				if(alunos[i].lacos[k+1]<48 || alunos[i].lacos[k+1] > 57 ||alunos[i].lacos[k+1] == ' '  ){
@@ -106,19 +107,19 @@ int main(){
 
 
 						if(alunos[i].lacos[k-1] >= 48 && alunos[i].lacos[k-1] <=57 ){
-							printf("entrou\n");
-							num =(10 * (alunos[i].lacos[k-1] - 48)) + (alunos[i].lacos[k] - 48);
-							Enfileirar(num, alunos[i].adjacentes);
+							
+							num =(10 * (alunos[i].lacos[k-1] - 48)) + (alunos[i].lacos[k] - 48); // transofrmar o valor da string de tabela ascii para inteiro
+							Enfileirar(num, alunos[i].adjacentes);	// pega o valor final e coloca nos adjacentes do aluno referido pelo indice;
 						}
 						else{
 						
-							num = alunos[i].lacos[k] - 48;
-							Enfileirar(num, alunos[i].adjacentes);
+							num = alunos[i].lacos[k] - 48;		 // transofrmar o valor da string de tabela ascii para inteiro;
+							Enfileirar(num, alunos[i].adjacentes);	// pega o valor final e coloca nos adjacentes do aluno referido pelo indice;
 						}
 					}
 					else{
-						num = alunos[i].lacos[k] - 48;
-						Enfileirar(num, alunos[i].adjacentes);
+						num = alunos[i].lacos[k] - 48;		 // transofrmar o valor da string de tabela ascii para inteiro;
+						Enfileirar(num, alunos[i].adjacentes);	// pega o valor final e coloca nos adjacentes do aluno referido pelo indice;
 
 					}
 				}
@@ -135,3 +136,4 @@ int main(){
 	fclose(fp);
 	return 0;
 }	
+ 	
