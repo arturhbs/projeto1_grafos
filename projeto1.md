@@ -46,7 +46,7 @@ void BubbleSort(t_aluno * a){
 	while(fez_troca == 1){
 		fez_troca =0;
 		for(i=0;i<38;i++){/* eh necessario ser a quantidade total(39) - 2 pq senao haverá seg fault;*/
-			if(a[i].grau > a[i+1].grau){
+			if(a[i].grau < a[i+1].grau){
 				aux = a[i];
 				a[i] = a[i+1];
 				a[i+1] = aux;
@@ -109,7 +109,6 @@ int main(){
 		}
 		else{	
 			
-			printf("%s\n",alunos[i].lacos );
 			for(k=0;k<strlen(alunos[i].lacos); k++){ /* para salvar em uma lista os alunos adjacentes*/
 			
 				
