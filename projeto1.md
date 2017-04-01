@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 
+
 typedef struct fila {
 	int knot;
 	struct fila *proximo;
@@ -38,6 +39,23 @@ void Enfileirar (int valor, t_fila *f) {
 	}
 	f->ultimo = novoultimo;										
 }
+void BubbleSort(t_aluno * a){
+	int i, fez_troca=1;
+	t_aluno aux;
+
+	while(fez_troca == 1){
+		fez_troca =0;
+		for(i=0;i<38;i++){/* eh necessario ser a quantidade total(39) - 2 pq senao haverá seg fault;*/
+			if(a[i].grau > a[i+1].grau){
+				aux = a[i];
+				a[i] = a[i+1];
+				a[i+1] = aux;
+				fez_troca =1;
+			}
+		}
+	}
+
+}
 
 
 void imprimeAdjacentes ( t_aluno * f) {
@@ -56,7 +74,6 @@ void imprimeAdjacentes ( t_aluno * f) {
 
 		}
 		printf ("\\\n");
-		getchar();
 	}
 
 }
@@ -123,6 +140,8 @@ int main(){
 
 		i++;
 	}	
+
+	BubbleSort(alunos);	
 	for(i=0;i<39;i++){
 		imprimeAdjacentes(&alunos[i]);
 	}
