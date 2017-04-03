@@ -24,9 +24,11 @@ typedef struct {
 }t_aluno;
 
 t_aluno alunos[39];
-t_lista * cliques[50]; 
+t_lista * cliques[5]; 
 int count;
 
+
+/* Funcoes para manipulacao de listas */
 t_lista * CriaLista () {
 	t_lista * nova_lista;
 	
@@ -67,10 +69,10 @@ void RemoveInicio (t_lista *l) {
 	
 }
 
+/* ---------------------------------------------- */
 
 
-
-t_lista * Interseccao (t_lista * l, int vertice) {
+t_lista * Interseccao (t_lista * l, int vertice) { /*Funcao para fazer a interseccao entre uma lista e a lista de adjacencia de um vertice.*/
 	t_elemento * alvo1, * alvo2;
 	t_lista * nova_lista;
 	
@@ -94,7 +96,7 @@ t_lista * Interseccao (t_lista * l, int vertice) {
 	return nova_lista;
 }
 
-t_lista * CopiaLista (t_lista * l) {
+t_lista * CopiaLista (t_lista * l) { /*Funcao feita para criar uma nova lista r a partir de uma lista r antiga */
 	t_lista * nova_lista;
 	t_elemento * alvo;
 	
@@ -111,7 +113,7 @@ t_lista * CopiaLista (t_lista * l) {
 	
 }
 
-void BubbleSort(){
+void BubbleSort(){ /* Algoritmo para ordenar a lista de alunos pelo grau */
 	int i, fez_troca=1;
 	t_aluno aux;
 
@@ -129,7 +131,7 @@ void BubbleSort(){
 
 }
 
-void CriaGrafo(){
+void CriaGrafo(){ /* Funcao para construir o grafo a partir do arquivo texto */
 	int i =0, num = 0, k =0;
 	FILE * fp;
 	char amigos[] = "amigos.txt";
@@ -200,21 +202,31 @@ void imprimeAdjacentes ( int i) {
 }
 
 void ImprimeClique() {
-	int i;
+	int i, maior_tamanho = -1, tamanho, membro;
 	t_elemento * alvo;
-	/*t_elemento * primeiro_maior; */
+	t_elemento * primeiro_maior; 
 	
-	for (i=0;i<count;i++) { 	
+	for (i=0;i<count;i++) { 
+		tamanho = 0;
 		alvo = cliques[i]->primeiro;
-		printf ("%d ", i);
 		while(alvo  != NULL){
-			
-			printf ("%d->", alvo->knot);
 			alvo = alvo->proximo;
+			tamanho++;
 
 		}
-		printf ("\\\n");
+		if (tamanho > maior_tamanho) {
+			primeiro_maior = cliques[i]->primeiro;
+			maior_tamanho = tamanho;
+		}
 	}
+	alvo = primeiro_maior;
+	while(alvo  != NULL){
+        membro = alvo->knot - 1;
+		printf("%s->", alunos[membro].nome);
+        alvo = alvo->proximo;
+
+	}
+    printf("\n");
 	
 	
 	
@@ -248,7 +260,7 @@ void BronKerbosch (t_lista * r, t_lista * x, t_lista * p) { /*Implementacao do a
 			count++;
 		}
 		else {
-			LiberaMemoria(r); 
+			LiberaMemoria(r); /* A funcao entrara nessa condicao caso ache um clique nao maximal, que nao precisa ser guardado */
 		}
 	}
 	
@@ -296,9 +308,9 @@ int main(){
 		imprimeAdjacentes(i);
 		LiberaMemoria(alunos[i].adjacentes);
 	}
-	
-
-
+	LiberaMemoria(x);
+    LiberaMemoria(p);
+    LiberaMemoria(r);
 	return 0;
 }	
  	
