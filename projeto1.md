@@ -24,7 +24,7 @@ typedef struct {
 }t_aluno;
 
 t_aluno alunos[39];
-t_lista * cliques[5]; 
+t_lista * cliques[50]; 
 int count;
 
 t_lista * CriaLista () {
