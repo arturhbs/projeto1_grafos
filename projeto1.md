@@ -280,7 +280,7 @@ int main(){
 	
 	
 	
-	CriaGrafo(alunos);
+	CriaGrafo();
 	
 	r = CriaLista();
 	x = CriaLista();
