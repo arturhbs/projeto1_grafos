@@ -1,3 +1,19 @@
+
+/*Universidade de Brasilia
+Instituto de Ciencias Exatas
+Departamento de Ciencia da Computacao
+
+Teroria e aplicação de grafos - 01/2017
+
+Alunos(a): Artur Henrique Brandao de Souza	- 15/0118783 
+		   Marcos Paulo Batalha Bispo - 15O154208
+							
+Versão do compilador: gcc(GCC) 4.8.1
+
+Descricao:	O projeto consiste em escrever um programa em C que lê o arquivo (amigos_tag20171.txt), monta com esses dados um grafo não direcionado, sem pesos, 
+usando listas de adjacências, e imprime como saída (tela) em ordem decrescente, os alunos (vértices) com maiores graus no grafo, até o de menor. O programa deve 
+encontrar e imprimir o maior clique desse grafo (pelos nomes de todos).
+*/
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
