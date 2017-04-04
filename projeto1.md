@@ -39,7 +39,7 @@ typedef struct {
 	t_lista * adjacentes;
 }t_aluno;
 
-t_aluno alunos[39];
+t_aluno alunos[39], aluno[39];
 t_lista * cliques[5]; 
 int count;
 
@@ -136,10 +136,10 @@ void BubbleSort(){ /* Algoritmo para ordenar a lista de alunos pelo grau */
 	while(fez_troca == 1){
 		fez_troca =0;
 		for(i=0;i<38;i++){/* eh necessario ser a quantidade total(39) - 2 pq senao haverá seg fault;*/
-			if(alunos[i].grau < alunos[i+1].grau){
+			if(aluno[i].grau < alunos[i+1].grau){
 				aux = alunos[i];
-				alunos[i] = alunos[i+1];
-				alunos[i+1] = aux;
+				aluno[i] = aluno[i+1];
+				aluno[i+1] = aux;
 				fez_troca =1;
 			}
 		}
@@ -194,6 +194,11 @@ void CriaGrafo(){ /* Funcao para construir o grafo a partir do arquivo texto */
 		i++;
 	}	
 	fclose(fp);
+	for(i=0;i<39;i++){
+		aluno[i] = alunos[i];
+
+	}
+
 }
 
 
@@ -201,11 +206,11 @@ void imprimeAdjacentes ( int i) {
 
 	t_elemento * alvo;
 
-	if(alunos[i].adjacentes == NULL){
-		printf("HELLO DARKNESS MY ONLY FRIEND\n");
+	if(aluno[i].adjacentes == NULL){
+		printf("\\\n");
 	}
 	else{
-		alvo = alunos[i].adjacentes->primeiro;
+		alvo = aluno[i].adjacentes->primeiro;
 		while(alvo  != NULL){
 		
 			printf ("%d->", alvo->knot);
