@@ -1,19 +1,3 @@
-
-/*Universidade de Brasilia
-Instituto de Ciencias Exatas
-Departamento de Ciencia da Computacao
-
-Teroria e aplicação de grafos - 01/2017
-
-Alunos(a): Artur Henrique Brandao de Souza	- 15/0118783 
-		   Marcos Paulo Batalha Bispo - 15O154208
-							
-Versão do compilador: gcc(GCC) 4.8.1
-
-Descricao:	O projeto consiste em escrever um programa em C que lê o arquivo (amigos_tag20171.txt), monta com esses dados um grafo não direcionado, sem pesos, 
-usando listas de adjacências, e imprime como saída (tela) em ordem decrescente, os alunos (vértices) com maiores graus no grafo, até o de menor. O programa deve 
-encontrar e imprimir o maior clique desse grafo (pelos nomes de todos).
-*/
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -40,6 +24,7 @@ typedef struct {
 }t_aluno;
 
 t_aluno alunos[39];
+t_aluno alunos_ordenada[39];
 t_lista * cliques[5]; 
 int count;
 
@@ -136,10 +121,10 @@ void BubbleSort(){ /* Algoritmo para ordenar a lista de alunos pelo grau */
 	while(fez_troca == 1){
 		fez_troca =0;
 		for(i=0;i<38;i++){/* eh necessario ser a quantidade total(39) - 2 pq senao haverá seg fault;*/
-			if(alunos[i].grau < alunos[i+1].grau){
-				aux = alunos[i];
-				alunos[i] = alunos[i+1];
-				alunos[i+1] = aux;
+			if(alunos_ordenada[i].grau < alunos_ordenada[i+1].grau){
+				aux = alunos_ordenada[i];
+				alunos_ordenada[i] = alunos_ordenada[i+1];
+				alunos_ordenada[i+1] = aux;
 				fez_troca =1;
 			}
 		}
@@ -197,23 +182,14 @@ void CriaGrafo(){ /* Funcao para construir o grafo a partir do arquivo texto */
 }
 
 
-void imprimeAdjacentes ( int i) {
-
-	t_elemento * alvo;
-
-	if(alunos[i].adjacentes == NULL){
-		printf("HELLO DARKNESS MY ONLY FRIEND\n");
+void ImprimeAdjacentes () {
+	int i;
+	
+	
+	for(i=0;i<39;i++){
+		printf("%s %s grau:%d\n", alunos_ordenada[i].matricula ,alunos_ordenada[i].nome, alunos_ordenada[i].grau);
 	}
-	else{
-		alvo = alunos[i].adjacentes->primeiro;
-		while(alvo  != NULL){
-		
-			printf ("%d->", alvo->knot);
-			alvo = alvo->proximo;
-
-		}
-		printf ("\\\n");
-	}
+	
 
 }
 
@@ -243,7 +219,6 @@ void ImprimeClique() {
 
 	}
     printf("\n");
-    printf ("\\\n");
 	
 	
 	
@@ -271,13 +246,14 @@ void BronKerbosch (t_lista * r, t_lista * x, t_lista * p) { /*Implementacao do a
 	t_lista *r_novo, *x_novo, *p_novo;
 	int vertice;
 	
+
 	if (p->primeiro == NULL) {
 		if (x->primeiro == NULL) { /* Guarda um clique maximal em um vetor usado para guardar todos os cliques */
 			cliques[count] = r;
 			count++;
 		}
 		else {
-			LiberaMemoria(r); /* A funcao entrara nessa condicao caso ache um clique nao maximal, que nao precisa ser guardado */
+			LiberaMemoria(r);  /*A funcao entrara nessa condicao caso ache um clique nao maximal, que nao precisa ser guardado */
 		}
 	}
 	
@@ -292,7 +268,7 @@ void BronKerbosch (t_lista * r, t_lista * x, t_lista * p) { /*Implementacao do a
 			InserirFinal (vertice,x);
 			RemoveInicio (p);
 			LiberaMemoria(p_novo);
-			LiberaMemoria(x_novo);
+			LiberaMemoria(x_novo); 
 		}
 	}
 	
@@ -311,6 +287,8 @@ int main(){
 	
 	CriaGrafo();
 	
+
+	
 	r = CriaLista();
 	x = CriaLista();
 	p = CriaLista();
@@ -318,13 +296,21 @@ int main(){
 	for(i=1;i<40;i++){
 		InserirFinal(i,p);
 	}
+
+	for(i=0;i<39;i++) {
+		alunos_ordenada[i] = alunos[i];
+	}
+	BubbleSort();
+
+	ImprimeAdjacentes();
+
 	BronKerbosch(r, x, p);
 	ImprimeClique();
-	BubbleSort();	
+		
 	for(i=0;i<39;i++){
-		imprimeAdjacentes(i);
 		LiberaMemoria(alunos[i].adjacentes);
 	}
+	
 	LiberaMemoria(x);
     LiberaMemoria(p);
     LiberaMemoria(r);
