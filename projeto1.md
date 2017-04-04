@@ -243,6 +243,7 @@ void ImprimeClique() {
 
 	}
     printf("\n");
+    printf ("\\\n");
 	
 	
 	
